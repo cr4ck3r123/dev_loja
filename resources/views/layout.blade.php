@@ -20,7 +20,7 @@
                     <a class="nav-link" href="{{ route('exercicio1') }}">Exercicio1</a>
                 </div>
             </div>
-            <a href="#" class="btn btn-sm"><i class="fa fa-shopping-cart"></i></a>
+            <a href="{{route('ver_carrinho')}}" class="btn btn-sm"><i class="fa fa-shopping-cart"></i></a>
         </nav>
 
         <div class="container">

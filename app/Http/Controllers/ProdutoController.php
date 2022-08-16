@@ -28,16 +28,52 @@ class ProdutoController extends Controller
               $queryProdutos = Produto::limit(4);
               
               if($idcategoria != null){
-                   $queryProdutos->where("categoria_id",$idcategoria);
-                   
+                   $queryProdutos->where("categoria_id",$idcategoria);                   
               }
               
               $listaProdutos = $queryProdutos->get();
                                    
               $data["lista"] = $listaProdutos;
               $data["listaCategoria"] = $listaCategorias;
+              $data["idcategoria"] = $idcategoria;
               
               
        return view("categoria", $data); 
    }
+   
+   public function adicionarCarrinho($idProduto = 0, Request $request){
+       //Buscar o produto ID
+       $prod = Produto::find($idProduto);
+       
+       if($prod){
+           //Encontrou um produto
+           //Buscar da sessão o carrinho atual
+           $carrinho = session('cart', []);
+           
+           array_push($carrinho, $prod);
+           
+           session(['cart' => $carrinho]);
+           
+       }
+       return redirect()->route("home");
+   }
+   
+   public function verCarrinho(Request $request){
+       $carrinho = session('cart', []);
+       $data = ['cart' => $carrinho ];
+      // dd($carrinho);
+       return view("carrinho", $data);
+   }
+   
+   public function excluirCarrinho($indice, Request $request){
+       
+       $carrinho = session('cart', []);
+       if(isset($carrinho[$indice])){
+           unset($carrinho[$indice]);
+       }
+       session(["cart" => $carrinho]);
+       return redirect()->route("ver_carrinho");
+       
+   }
+   
 }
