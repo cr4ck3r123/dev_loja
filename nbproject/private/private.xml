@@ -5,9 +5,12 @@
         <group>
             <file>file:/C:/arquivos/dev-loja/app/Http/Controllers/ProdutoController.php</file>
             <file>file:/C:/arquivos/dev-loja/resources/views/produtos.blade.php</file>
-            <file>file:/C:/arquivos/dev-loja/resources/views/layout.blade.php</file>
+            <file>file:/C:/arquivos/dev-loja/app/Models/Usuario.php</file>
+            <file>file:/C:/arquivos/dev-loja/app/Models/Endereco.php</file>
             <file>file:/C:/arquivos/dev-loja/resources/views/carrinho.blade.php</file>
             <file>file:/C:/arquivos/dev-loja/resources/views/categoria.blade.php</file>
+            <file>file:/C:/arquivos/dev-loja/resources/views/cadastrar.blade.php</file>
+            <file>file:/C:/arquivos/dev-loja/app/Http/Controllers/ClienteController.php</file>
             <file>file:/C:/arquivos/dev-loja/routes/web.php</file>
         </group>
     </open-files>

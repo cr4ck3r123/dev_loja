@@ -26,7 +26,17 @@ class ClienteController extends Controller
      $endereco->logradouro = $request->input("endereco", "");
    //  dd($endereco);
              
-             
-     return redirect()->route("cadastrar");
+   try {
+       $usuario->save(); //Salvar Usuario
+       $endereco->usuario_id = $usuario->id; //Relacionamento das tabelas
+       $endereco->save(); //Salvar endereço
+       
+   } catch (Exception $exc) {
+       echo $exc->getTraceAsString();
+   }
+
+
+
+   return redirect()->route("cadastrar");
  }
 }
