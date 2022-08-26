@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('enderecos', function (Blueprint $table) {
             $table->increments("id");
             $table->string("logradouro");
-            $table->string("numero");
+            $table->string("numero")->nullable(); //NUMERO PODE SER NULLO
             $table->string("cidade");
             $table->string("estado");
             $table->string("cep");
-            $table->string("complemento");
+            $table->string("complemento")->nullable();  //NUMERO PODE SER NULLO
             $table->integer("usuario_id")->unsigned();
             
             $table->timestamps();

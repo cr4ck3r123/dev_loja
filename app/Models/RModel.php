@@ -30,8 +30,7 @@ class RModel extends Model
             return parent::save($options);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
-        }
-            
+        }            
         
     }
 }

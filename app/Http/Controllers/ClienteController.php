@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Endereco;
+use App\Services\ClienteService;
 
 class ClienteController extends Controller
 {
@@ -17,26 +18,27 @@ class ClienteController extends Controller
  //Função de cadastrar Cliente
  public function cadastrarCliente(Request $request ){
      
-     //Pega todos os valores do formulario
-     $values = $request->all();     
-     $usuario = new \App\Models\Usuario();
-     //$usuario->cpf == $request->input("cpf", "");
-     $usuario->fill($values);
+   
+     $values = $request->all();    //Pega todos os valores do formulario   
+     $usuario = new \App\Models\Usuario(); // Estancia um variavel usuario
+          
+     $usuario->fill($values); //$usuario->cpf == $request->input("cpf", ""); recebe apenas o que esta no fillable
+     
+     $senha = $request->input("password", "");
+     $usuario->password =  $senha;     //\Hash::make($senha); //Criptografar senha
+     
      $endereco = new Endereco($values);
      $endereco->logradouro = $request->input("endereco", "");
    //  dd($endereco);
              
-   try {
-       $usuario->save(); //Salvar Usuario
-       $endereco->usuario_id = $usuario->id; //Relacionamento das tabelas
-       $endereco->save(); //Salvar endereço
-       
-   } catch (Exception $exc) {
-       echo $exc->getTraceAsString();
-   }
-
-
-
+     $clienteService = new ClienteService();
+     $result = $clienteService->salvarUsuarios($usuario, $endereco);
+     $message = $result["message"];
+     $status = $result["status"];
+// dd($result);
+    //Ok, cadastrado com sucesso
+     //err, Usuario não cadastrado
+    $request->session()->flash($status, $message);
    return redirect()->route("cadastrar");
  }
 }
