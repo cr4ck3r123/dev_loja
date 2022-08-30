@@ -25,20 +25,20 @@ class ClienteController extends Controller
      $usuario->fill($values); //$usuario->cpf == $request->input("cpf", ""); recebe apenas o que esta no fillable
      
      $senha = $request->input("password", "");
-     $usuario->password =  $senha;     //\Hash::make($senha); //Criptografar senha
+     $usuario->password = \Hash::make($senha); //Criptografar senha
      
      $endereco = new Endereco($values);
      $endereco->logradouro = $request->input("endereco", "");
    //  dd($endereco);
              
      $clienteService = new ClienteService();
-     $result = $clienteService->salvarUsuarios($usuario, $endereco);
+     $result = $clienteService->salvarUsuarios($usuario, $endereco); //Salva o endereço com a function salvarUsuarios
      $message = $result["message"];
      $status = $result["status"];
 // dd($result);
     //Ok, cadastrado com sucesso
      //err, Usuario não cadastrado
-    $request->session()->flash($status, $message);
+   $request->session()->flash($status, $message);
    return redirect()->route("cadastrar");
  }
 }

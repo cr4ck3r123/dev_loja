@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Produto;
+use App\Services\VendaService;
 
 class ProdutoController extends Controller
 {
@@ -19,6 +20,8 @@ class ProdutoController extends Controller
        
        return view("home", $data);             
    }
+   
+ 
    
    public function categoria( Request $request, $idcategoria = 0){
               $data = [];    
@@ -74,6 +77,22 @@ class ProdutoController extends Controller
        session(["cart" => $carrinho]);
        return redirect()->route("ver_carrinho");
        
+   }
+      
+   public function finalizar(Request $request){
+       
+       $carrinho = session('cart', []);
+       $vendaService = new VendaService();
+       $result = $vendaServicedsa->finalizarVenda($carrinho);
+       
+       if($result["status"] == "Ok"){
+           $request->session()->forget("cart"); //Para poder limpar a sessão;
+           
+       }
+       
+       $request->session()->flash($result["status"], $result["message"]);
+       
+       return redirect()->route("ver_carrinho");
    }
    
 }

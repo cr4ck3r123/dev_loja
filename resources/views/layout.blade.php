@@ -19,11 +19,11 @@
                     <a class="nav-link" href="{{ route('contato') }}">Contato</a>
                     <a class="nav-link" href="{{ route('sobre') }}">Sobre</a>
 
-                    @if(!\Auth::user())
+                    @if(!Auth::user()) <!-- mostrar logar se não tiver logado -->
                     <a class="nav-link" href="{{ route('logar') }}">Logar</a>
-                   @else
-                   <a class="nav-link" href="{{ route('home') }}">Logout</a>
-                 @endif
+                    @else <!-- mostrar logout se tiver logado -->
+                   <a class="nav-link" href="{{  route('logout'); }}">Logout</a>
+                    @endif
                  
                     <!-- <a class="nav-link" href="{{ route('exercicio1') }}">Exercicio1</a> -->
                 </div>
@@ -34,17 +34,13 @@
         <div class="container">
             <div class="row">
                 
-             @if(\Auth::user()) <!--   Esssa é uma sessão que o laravel grava se usuario tiver logado -->
+             @if(Auth::user()) <!--   Esssa é uma sessão que o laravel grava se usuario tiver logado -->
                 <div class="col-12">
-                    <p class="text-right">Seja Bem Vindo!,  <a href="">Sair</a> </p>
+                    <p class="text-right">Seja Bem Vindo!, {{ Auth::user()->nome; }} <a href=" {{ route('logout') }}">Sair</a> </p>
                 </div>
               @endif
                 
-                @if($message = Session::get("err"))
-                <div class="col-12">
-                    <div class="alert alert-danger">{{ $message }}</div>
-                </div>
-                @endif
+              
                 
                 @if($message = Session::get("ok"))
                 <div class="col-12">

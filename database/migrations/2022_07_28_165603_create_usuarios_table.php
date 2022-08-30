@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string("email")->unique();
             $table->string("password",50);
             $table->string("telefone",30);
-            $table->boolean("nivel_usuario");
             $table->timestamps();
         });
     }

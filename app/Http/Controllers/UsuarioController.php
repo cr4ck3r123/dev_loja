@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
@@ -19,18 +19,28 @@ class UsuarioController extends Controller
             $senha = $request->input("password");
             
             $credential = ['email' => $login, 'password' =>  $senha];
-       //dd($credential);
-        //logar
-            if(Auth::attempt($credential)){
-                dd("Logou");
-                return redirect()->route('home');
-            }else{
-                $request->session()->flash("err", "Usuario ou Senha invalido");
-                       return redirect()->route('logar');
+         //   dd($credential);
+                 
+            
+            if(Auth::attempt($credential)){ //Se as credenciais forem validas 
+               //dd("Logou");               
+               return redirect()->route('home');
+            }else{ //Se não for valida 
+              //  dd("Não logou");
+                $request->session()->flash("err", "Login ou Senha invalido");
+                return redirect()->route('logar');
             }
+            
         }
         return view("logar", $data);
     }
     
+    
+    //Metodo logout
+      public function logout(){
+       Auth::logout();
+     return redirect()->route('home');
+   }
+   
     
 }

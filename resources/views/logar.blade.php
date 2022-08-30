@@ -1,13 +1,18 @@
 @extends("layout")<!-- comment -->
 @section("conteudo")
 
-<div class="col-12">
+<div class="col-6 container" align="">
+
+    <br><br><br><br>
+
     <h2 class="mb-3">Logar no Sistema</h2>
-    <form action="{{ route('logar') }}" method="post">
+    <hr>
+    <form action="{{ route('logar') }}" method="POST">
         @csrf
         <div class="form-group"><!-- comment -->
             Login:
             <input type="text" name="login" class="form-control">
+
         </div>
 
         <div class="form-group"><!-- comment -->
@@ -16,6 +21,10 @@
         </div>
         <input type="submit" value="logar" class="btn btn-lg btn-primary">
     </form>
-    
+    @if($message = Session::get("err"))
+    <div class="" align="center">
+        <div class="alert alert-danger">{{ $message }}</div>
+    </div>
+    @endif
 </div>
 @endsection

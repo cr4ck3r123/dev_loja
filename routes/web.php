@@ -25,8 +25,10 @@ Route::match(array('GET', 'POST'), '/exercicio1/{idexercicio}', [ProdutoControll
 Route::match(array('GET', 'POST'), '/cadastrar', [ClienteController::class, 'cadastrar'])->name('cadastrar');
 Route::match(array('GET', 'POST'), '/cliente/cadastrar', [ClienteController::class, 'cadastrarCliente'])->name('cadastrar_cliente');
 Route::match(array('GET', 'POST'), '/logar', [UsuarioController::class, 'logar'])->name('logar');
+Route::get('/sair', [UsuarioController::class, 'logout'])->name('logout');
 Route::match(array('GET', 'POST'), '/{idproduto}/carrinho/adicionar', [ProdutoController::class, 'adicionarCarrinho'])->name('adicionar_carrinho');
 Route::match(array('GET', 'POST'), '/carrinho', [ProdutoController::class, 'verCarrinho'])->name('ver_carrinho');
 Route::match(array('GET', 'POST'), '{indice}/excluircarrinho', [ProdutoController::class, 'excluirCarrinho'])->name('carrinho_excluir');
 Route::match(array('GET', 'POST'), '/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::match(array('GET', 'POST'), '/sobre', [SobreController::class, 'sobre'])->name('sobre');
+Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])->name('carrinho_finalizar');

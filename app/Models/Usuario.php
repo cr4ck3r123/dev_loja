@@ -3,23 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+//use Illuminate\Support\Facades\Auth; 
 
 class Usuario extends RModel implements Authenticatable
 {
+   
     protected $table = "usuarios";
-    protected $fillable = ['email', 'cpf', 'password', 'nome'];
+    protected $fillable = ['email', 'password', 'nome', 'cpf'];
     
  
     public function getAuthIdentifier(): mixed {
-        return "id";
+      return $this->nome;
     }
 
     public function getAuthIdentifierName(): string {
-       return "password";
+       return $this->getKey();
     }
 
     public function getAuthPassword(): string {
-         return "password";
+         return 'password';
     }
 
     public function getRememberToken(): string {

@@ -10,7 +10,7 @@ class ClienteService {
 
     public function salvarUsuarios(Usuario $usuario, Endereco $endereco) {
         try {
-            //Buscando um usuario com o email que deve ser salvo
+            //Buscando um usuario com o email que já tem no banco de dados
             $dbUsuario = Usuario::where("email", $usuario->email)->first();
             
             if($dbUsuario){
