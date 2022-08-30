@@ -32,3 +32,4 @@ Route::match(array('GET', 'POST'), '{indice}/excluircarrinho', [ProdutoControlle
 Route::match(array('GET', 'POST'), '/contato', [ContatoController::class, 'contato'])->name('contato');
 Route::match(array('GET', 'POST'), '/sobre', [SobreController::class, 'sobre'])->name('sobre');
 Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])->name('carrinho_finalizar');
+Route::match(array('GET', 'POST'), 'compra/historico', [ProdutoController::class, 'historico'])->name('compra_historico');

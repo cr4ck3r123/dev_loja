@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Produto;
 use App\Services\VendaService;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pedido;
 
 class ProdutoController extends Controller
 {
@@ -83,9 +85,9 @@ class ProdutoController extends Controller
        
        $carrinho = session('cart', []);
        $vendaService = new VendaService();
-       $result = $vendaServicedsa->finalizarVenda($carrinho);
+       $result = $vendaService->finalizarVenda($carrinho);
        
-       if($result["status"] == "Ok"){
+       if($result["status"] == "ok"){
            $request->session()->forget("cart"); //Para poder limpar a sessão;
            
        }
@@ -93,6 +95,19 @@ class ProdutoController extends Controller
        $request->session()->flash($result["status"], $result["message"]);
        
        return redirect()->route("ver_carrinho");
+   }
+   
+   public function historico(Request $request){
+       $data = [];
+       
+       //Pegar o id do usuario
+       $idUsuario = Auth::user()->id;
+       $listaPedido = Pedido::where("usuario_id", $idUsuario)->orderBy("datapedido", "desc")->get();
+       
+       $data["lista"] = $listaPedido;
+       
+       return view("compra/historico", $data);
+       
    }
    
 }

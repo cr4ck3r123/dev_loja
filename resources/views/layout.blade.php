@@ -22,9 +22,10 @@
                     @if(!Auth::user()) <!-- mostrar logar se não tiver logado -->
                     <a class="nav-link" href="{{ route('logar') }}">Logar</a>
                     @else <!-- mostrar logout se tiver logado -->
-                   <a class="nav-link" href="{{  route('logout'); }}">Logout</a>
+                    <a class="nav-link" href="{{ route('compra_historico') }}">Minha Compras</a>
+                    <a class="nav-link" href="{{  route('logout'); }}">Logout</a>
                     @endif
-                 
+
                     <!-- <a class="nav-link" href="{{ route('exercicio1') }}">Exercicio1</a> -->
                 </div>
             </div>
@@ -33,21 +34,21 @@
 
         <div class="container">
             <div class="row">
-                
-             @if(Auth::user()) <!--   Esssa é uma sessão que o laravel grava se usuario tiver logado -->
+
+                @if(Auth::user()) <!--   Esssa é uma sessão que o laravel grava se usuario tiver logado -->
                 <div class="col-12">
                     <p class="text-right">Seja Bem Vindo!, {{ Auth::user()->nome; }} <a href=" {{ route('logout') }}">Sair</a> </p>
                 </div>
-              @endif
-                
-              
-                
+                @endif
+
+
+
                 @if($message = Session::get("ok"))
                 <div class="col-12">
                     <div class="alert alert-success">{{ $message }}</div>
                 </div>
                 @endif
-              
+
                 @yield("conteudo")  <!---- Nesta div teremos uma area que os arquivos irão adicionar conteudo -->
             </div>
         </div>
