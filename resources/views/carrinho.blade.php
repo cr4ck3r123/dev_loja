@@ -40,7 +40,7 @@
     </tfooter>
 </table>
 
-<form method="post" action="{{ route('carrinho_finalizar') }}">
+<form method="post" action="{{ route('pagar') }}">
     @csrf
     <input type="submit" value="Finalizar Compra" class="btn btn-lg btn-success">
 </form>

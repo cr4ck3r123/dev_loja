@@ -8,9 +8,29 @@ use App\Models\Produto;
 use App\Services\VendaService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pedido;
+use App\Models\Itens_Pedido;
+use PagSeguro\Configuration\Configure;
+use PagSeguro\Services\Session;
 
 class ProdutoController extends Controller
 {
+    
+    private $_configs;
+    
+    public function __construct() {
+        $this->_configs = new Configure();
+        $this->_configs->setCharset("UTF-8");
+        $this->_configs->setAccountCredentials(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'));
+        $this->_configs->setEnvironment(env("PAGSEGURO_AMBIENTE"));
+        $this->_configs->setLog(true, storage_path('logs/pagseguro_'.date('Ymd'). '.log'));
+    }
+    
+    //Este metodo retorno um id de conexao
+    public function getCredential(){
+        return $this->_configs->getAccountCredentials();
+    }
+    
+    
    public function index(Request $request){      
        $data = [];       
  
@@ -108,6 +128,34 @@ class ProdutoController extends Controller
        
        return view("compra/historico", $data);
        
+   }
+   
+   public function detalhes(Request $request){
+       $idpedido = $request->input("idpedido");
+       
+       //Função query
+       $listaItens = Itens_Pedido::join("produtos", "produtos.id", "=", "itens__pedidos.produto_id")->where("pedido_id", $idpedido)
+               ->get([ 'itens__pedidos.*', 'itens__pedidos.valor as valoritem' , 'produtos.*']);
+       
+       $data = [];
+       $data["listaItens"] = $listaItens;
+       return view("compra/detalhes", $data);
+   }
+   
+   
+   public function pagar(Request $request){
+       $data = [];
+       
+       $carrinho = session('cart', []);
+       $data['cart'] = $carrinho;
+       $sessionCode = \PagSeguro\Services\Session::create($this->getCredential());
+              
+       $sessionCode = Session::create($this->getCredential());
+       
+       $IDSession = $sessionCode->getResult();
+       $data["sessionID"] = $IDSession;
+       
+       return view("compra/pagar", $data);
    }
    
 }

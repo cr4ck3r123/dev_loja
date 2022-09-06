@@ -35,15 +35,16 @@ class VendaService {
             $pedido->status = "PEN"; //Define status como PEN
             $pedido->usuario_id = $user->id; //Define coluna usuario_id com id do usuario           
             $pedido->save();    // aqui eu salvo os dados no banco
-                   
+              
+            //Dou um foreach na variavel carrinho 
             foreach($carrinho as $p){
-                $itens = new Itens_Pedido();
+                $itens = new Itens_Pedido(); //Estancio uma variavel do tipo itens pedido e seto com as propriedas do carrinho
                 $itens->quantidade = 1;
                 $itens->valor = $p->valor;
                 $itens->data_item = $dtHoje->format("Y-m-d H:i:s");
                 $itens->produto_id = $p->id;
                 $itens->pedido_id = $pedido->id;
-                $itens->save();               
+                $itens->save();            //Salvo no banco de dados   
             }                    
             \DB::commit();     
              return ['status' => 'ok', 'message' => 'venda finalizada com sucesso'];
